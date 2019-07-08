@@ -336,13 +336,21 @@ int main(int argc, char* argv[])
 
   return_values_init ret;
 
+  fprintf(stderr,"[DEBUG] INIT BSEC bsec_iot_init\n");
+
   ret = bsec_iot_init(sample_rate_mode, temp_offset, bus_write, bus_read,
                       _sleep, state_load, config_load);
+
+  fprintf(stderr,"[DEBUG] bme680 status %d\n", ret.bme680_status);
+  fprintf(stderr,"[DEBUG] bsec status %d\n", ret.bsec_status);
+
   if (ret.bme680_status) {
     /* Could not intialize BME680 */
+    fprintf(stderr,"[ERROR] Could not intialize BME680\n");
     return (int)ret.bme680_status;
   } else if (ret.bsec_status) {
     /* Could not intialize BSEC library */
+    fprintf(stderr,"[ERROR] Could not intialize BSEC library\n");
     return (int)ret.bsec_status;
   }
 
@@ -352,6 +360,7 @@ int main(int argc, char* argv[])
    * = 500 minutes (depending on the config).
    *
    */
+  fprintf(stderr,"[DEBUG] Call to endless loop bsec_iot_loop\n");
   bsec_iot_loop(_sleep, get_timestamp_us, output_ready, state_save, 10000);
 
   i2cClose();
