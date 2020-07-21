@@ -27,7 +27,7 @@ cc -Wall -Wno-unused-but-set-variable -Wno-unused-variable -static \
   -iquote"${BSEC_DIR}"/algo/${ARCH} \
   -iquote"${BSEC_DIR}"/examples \
   "${BSEC_DIR}"/API/bme680.c \
-  "${BSEC_DIR}"/examples/bsec_integration.c \
+  bsecpatches/bsec_integration.c \
   ./bsec_bme680.c \
   -L"${BSEC_DIR}"/algo/"${ARCH}" -lalgobsec \
   -lm -lrt \
