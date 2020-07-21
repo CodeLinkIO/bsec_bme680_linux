@@ -9,17 +9,6 @@ if [ ! -d "${BSEC_DIR}" ]; then
   exit 1
 fi
 
-echo 'Patching...'
-dir="${BSEC_DIR}/examples"
-patch='patches/eCO2+bVOCe.diff'
-if patch -N --dry-run --silent -d "${dir}/" \
-  < "${patch}" 2>/dev/null
-then
-  patch -d "${dir}/" < "${patch}"
-else
-  echo 'Already applied.'
-fi
-
 echo 'Compiling...'
 cc -Wall -Wno-unused-but-set-variable -Wno-unused-variable -static \
   -std=c99 -pedantic \
@@ -27,7 +16,7 @@ cc -Wall -Wno-unused-but-set-variable -Wno-unused-variable -static \
   -iquote"${BSEC_DIR}"/algo/${ARCH} \
   -iquote"${BSEC_DIR}"/examples \
   "${BSEC_DIR}"/API/bme680.c \
-  bsecpatches/bsec_integration.c \
+  "${BSEC_DIR}"/examples/bsec_integration.c \
   ./bsec_bme680.c \
   -L"${BSEC_DIR}"/algo/"${ARCH}" -lalgobsec \
   -lm -lrt \
