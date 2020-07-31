@@ -175,9 +175,8 @@ return_values_init bsec_iot_init(float sample_rate, float temperature_offset, bm
     
     /* Fixed I2C configuration */
 
-    // bme680_g.dev_id = BME680_I2C_ADDR_PRIMARY;
-    // NOTE: Patch
-    bme680_g.dev_id = BME680_I2C_ADDR_SECONDARY;
+    bme680_g.dev_id = BME680_I2C_ADDR_PRIMARY;
+    // bme680_g.dev_id = BME680_I2C_ADDR_SECONDARY;
     bme680_g.intf = BME680_I2C_INTF;
     /* User configurable I2C configuration */
     bme680_g.write = bus_write;
@@ -186,9 +185,6 @@ return_values_init bsec_iot_init(float sample_rate, float temperature_offset, bm
     
     /* Initialize BME680 API */
     ret.bme680_status = bme680_init(&bme680_g);
-
-    fprintf(stderr, "[DEBUG] Chip ID %d >< %d\n", bme680_g.chip_id, BME680_CHIP_ID);
-    
     if (ret.bme680_status != BME680_OK)
     {
         return ret;

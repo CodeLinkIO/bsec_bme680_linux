@@ -296,14 +296,12 @@ int8_t bme680_init(struct bme680_dev *dev)
 		if (rslt == BME680_OK) {
 			rslt = bme680_get_regs(BME680_CHIP_ID_ADDR, &dev->chip_id, 1, dev);
 			if (rslt == BME680_OK) {
-				rslt = get_calib_data(dev);
-				// NOTE: THIS PATCH IS TO WORK WITH CJMCU-680
-				// if (dev->chip_id == BME680_CHIP_ID) {
-				// 	/* Get the Calibration data */
-				// 	rslt = get_calib_data(dev);
-				// } else {
-				// 	rslt = BME680_E_DEV_NOT_FOUND;
-				// }
+				if (dev->chip_id == BME680_CHIP_ID) {
+					/* Get the Calibration data */
+					rslt = get_calib_data(dev);
+				} else {
+					rslt = BME680_E_DEV_NOT_FOUND;
+				}
 			}
 		}
 	}
